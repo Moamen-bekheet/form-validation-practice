@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        :root, body,html{
+            height: 100vh;
+            font-size: 16px;
+            padding: 0;
+            margin: 0;
+        }
+        .screen{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            background: linear-gradient(#334155, #cbd5e1);
+        }
+        form{
+            /* border: 1px solid black; */
+            padding: 2rem;
+            background-color: #f1f5f9;
+        }
+        input{
+            border-radius: 2rem;
+            outline: 0;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="screen">
+        <form>
+            <h1>Fill up the form</h1>
+            <div>
+                <label for="email">Enter your email:</label><br>
+                <input type="email" id="email" name="email">
+            </div>
+            <div>
+                <label for="country">Enter your country</label><br>
+                <input type="text" id="country" name="country" pattern="[A-Za-z]+" required>
+            </div>
+            <div>
+                <label for="zip-code">Enter your local zip-code</label><br>
+                <input type="text" id="zip-code" name="zip-code" pattern="[0-9]{4}" required>
+            </div>
+            <div>
+                <label for="password">Enter a password</label><br>
+                <input type="password" id="password" name="password">
+            </div>
+            <div>
+                <label for="password-confirmation">Confirm password</label><br>
+                <input type="password" id="password-confirmation" name="password-confirmation">
+            </div>
+            <button type="submit">Sign-up</button>
+        </form>
+    </div>
+    <script>
+        const email = document.getElementById('email');
+        const country = document.getElementById('country');
+        const zipCode = document.getElementById('zip-code');
+        const password = document.getElementById('password');
+        const passwordConfirmation = document.getElementById('password-confirmation');
+        email.addEventListener('input',()=>{
+            if(email.validity.typeMismatch || email.validity.valueMissing){
+                email.setCustomValidity("We need an email format here!!")
+                email.reportValidity();
+            }
+            else{
+                email.setCustomValidity('');
+            }
+        })
+        country.addEventListener('invalid', ()=>{
+            if(country.validity.valueMissing){
+                country.setCustomValidity('Enter your country');
+            }
+            else if(country.validity.patternMismatch){
+                country.setCustomValidity('alphabetic letters only');
+            }
+            else{
+                country.setCustomValidity('');
+            }
+        })
+        // zipCode.addEventListener
+        // zipCode.addEventListener('invalid', ()=>{
+        //     if(zipCode.validity.valueMissing){
+        //         zipCode.setCustomValidity('Enter your local zip-code');
+        //         zipCode.reportValidity();
+        //     }
+        //     else if(country.validity.patternMismatch){
+        //         zipCode.setCustomValidity('numeric digits only');
+        //         zipCode.reportValidity();
+        //     }
+        //     else{
+        //         zipCode.setCustomValidity('');
+        //     }
+        // })
+        zipCode.addEventListener('input',()=>{
+            if(zipCode.validity.patternMismatch){
+                zipCode.setCustomValidity("4 numeric digits only!!")
+                zipCode.reportValidity();
+            }
+            else{
+                zipCode.setCustomValidity('');
+            }
+        })
+        passwordConfirmation.addEventListener('input',()=>{
+            if(passwordConfirmation.value != password.value){
+                passwordConfirmation.setCustomValidity('passwords don\'t match');
+                zipCode.reportValidity()
+            }
+        })
+    </script>
+</body>
+</html>
